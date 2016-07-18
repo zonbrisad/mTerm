@@ -45,7 +45,7 @@ def addHeader(file, fileName, brief, date, author, licence):
 
 def addSection(file, desc):
     line = '-' * (71 - len(desc))
-    file.write("/* " + desc + " " + line + "*/\n\n")
+    file.write("// " + desc + " " + line + "\n\n")
     
 def addSection2(file, desc):
     file.write(                \
@@ -67,7 +67,7 @@ def addSentinelEnd(file):
 def addCppSentinel(file):
     file.write(              \
     "#ifdef __cplusplus\n"   \
-    "extern \"C\"\n"         \
+    "extern \"C\" {\n"       \
     "#endif\n\n")
      
 def addCppSentinelEnd(file): 
@@ -112,7 +112,7 @@ def newModule(dir, author, licence):
     addHeader(fileH, fileNameH, brief, date, author, licence)
     addSentinelBegin(fileH, fName.upper())
     addCppSentinel(fileH)
-    addSection(fileC, "Includes")
+    addSection(fileH, "Includes")
     addSection(fileH, "Macros")
     addSection(fileH, "Typedefs")
     addSection(fileH, "Variables")
