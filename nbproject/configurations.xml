@@ -102,6 +102,9 @@
             <pElem>/usr/include/glib-2.0</pElem>
             <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>_GNU_SOURCE</Elem>
+          </preprocessorList>
         </cTool>
       </folder>
       <folder path="0/src/lua-5.2.3">
@@ -121,6 +124,9 @@
             <pElem>/usr/include/glib-2.0</pElem>
             <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>_GNU_SOURCE</Elem>
+          </preprocessorList>
         </cTool>
       </item>
       <item path="src/libtermkey-0.18/driver-null.c" ex="false" tool="0" flavor2="3">
@@ -271,6 +277,9 @@
             <pElem>/usr/include/glib-2.0</pElem>
             <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>_GNU_SOURCE</Elem>
+          </preprocessorList>
         </cTool>
       </item>
     </conf>

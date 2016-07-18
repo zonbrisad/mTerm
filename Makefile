@@ -26,7 +26,6 @@ SRC = src/main.c \
       src/gp_log.c \
       src/libtermkey-0.18/termkey.c            \
       src/libtermkey-0.18/driver-ti.c          \
-      src/libtermkey-0.18/driver-null.c        \
       src/libtermkey-0.18/driver-csi.c         \
       src/lua-5.2.3/src/lstrlib.c              \
 	src/lua-5.2.3/src/lvm.c \
@@ -79,7 +78,7 @@ INCLUDE = src \
 LIB  = -lm 
 LIB += $(shell pkg-config --libs glib-2.0)
 LIB += $(shell pkg-config --libs gthread-2.0)
-#LIB += $(shell pkg-config --libs ncurses)
+LIB += $(shell pkg-config --libs ncurses)
 #LIB += $(shell pkg-config --libs lua5.1)
 #LIB += $(shell pkg-config --libs sqlite3)
 
@@ -100,7 +99,8 @@ OPT = 2
 CSTANDARD = -std=gnu99
 
 CDEFS = -DHAVE_CONFIG_H \
-        -DLUA_USE_MKSTEMP 
+        -DLUA_USE_MKSTEMP \
+	-D_GNU_SOURCE
 
 # Place -D or -U options here for ASM sources
 ADEFS = 
