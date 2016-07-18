@@ -24,39 +24,43 @@ TARGET = mterm
 # List C source files here. (C dependencies are automatically generated.)
 SRC = src/main.c \
       src/gp_log.c \
-      src/lua-5.2.3/src/lstrlib.c \
-			src/lua-5.2.3/src/lvm.c \
-			src/lua-5.2.3/src/lzio.c \
-			src/lua-5.2.3/src/lfunc.c \
-			src/lua-5.2.3/src/ldo.c \
-			src/lua-5.2.3/src/lgc.c \
-			src/lua-5.2.3/src/lbitlib.c \
-			src/lua-5.2.3/src/ldump.c \
-			src/lua-5.2.3/src/lctype.c \
-			src/lua-5.2.3/src/lauxlib.c \
-			src/lua-5.2.3/src/lundump.c \
-			src/lua-5.2.3/src/lmem.c \
-			src/lua-5.2.3/src/ltm.c \
-			src/lua-5.2.3/src/ldebug.c \
-			src/lua-5.2.3/src/lmathlib.c \
-			src/lua-5.2.3/src/ltablib.c \
-			src/lua-5.2.3/src/lapi.c \
-			src/lua-5.2.3/src/loadlib.c \
-			src/lua-5.2.3/src/llex.c \
-			src/lua-5.2.3/src/lstring.c \
-			src/lua-5.2.3/src/lbaselib.c \
-			src/lua-5.2.3/src/lobject.c \
-			src/lua-5.2.3/src/loslib.c \
-			src/lua-5.2.3/src/lstate.c \
-			src/lua-5.2.3/src/lparser.c \
-			src/lua-5.2.3/src/ltable.c \
-			src/lua-5.2.3/src/lopcodes.c \
-			src/lua-5.2.3/src/linit.c \
-			src/lua-5.2.3/src/lcorolib.c \
-			src/lua-5.2.3/src/lcode.c \
-			src/lua-5.2.3/src/liolib.c \
-			src/lua-5.2.3/src/ldblib.c \
-
+      src/libtermkey-0.18/termkey.c            \
+      src/libtermkey-0.18/driver-ti.c          \
+      src/libtermkey-0.18/driver-null.c        \
+      src/libtermkey-0.18/driver-csi.c         \
+      src/lua-5.2.3/src/lstrlib.c              \
+	src/lua-5.2.3/src/lvm.c \
+	src/lua-5.2.3/src/lzio.c \
+	src/lua-5.2.3/src/lfunc.c \
+	src/lua-5.2.3/src/ldo.c \
+	src/lua-5.2.3/src/lgc.c \
+	src/lua-5.2.3/src/lbitlib.c \
+	src/lua-5.2.3/src/ldump.c \
+	src/lua-5.2.3/src/lctype.c \
+	src/lua-5.2.3/src/lauxlib.c \
+	src/lua-5.2.3/src/lundump.c \
+	src/lua-5.2.3/src/lmem.c \
+	src/lua-5.2.3/src/ltm.c \
+	src/lua-5.2.3/src/ldebug.c \
+	src/lua-5.2.3/src/lmathlib.c \
+	src/lua-5.2.3/src/ltablib.c \
+	src/lua-5.2.3/src/lapi.c \
+	src/lua-5.2.3/src/loadlib.c \
+	src/lua-5.2.3/src/llex.c \
+	src/lua-5.2.3/src/lstring.c \
+	src/lua-5.2.3/src/lbaselib.c \
+	src/lua-5.2.3/src/lobject.c \
+	src/lua-5.2.3/src/loslib.c \
+	src/lua-5.2.3/src/lstate.c \
+	src/lua-5.2.3/src/lparser.c \
+	src/lua-5.2.3/src/ltable.c \
+	src/lua-5.2.3/src/lopcodes.c \
+	src/lua-5.2.3/src/linit.c \
+	src/lua-5.2.3/src/lcorolib.c \
+	src/lua-5.2.3/src/lcode.c \
+	src/lua-5.2.3/src/liolib.c \
+	src/lua-5.2.3/src/ldblib.c \
+	
 # List C++ source files here. (C dependencies are automatically generated.)
 CPPSRC = 
 
@@ -66,7 +70,8 @@ ASRC =
 
 # Include directories
 INCLUDE = src \
-					src/lua-5.2.3/src \
+          src/libtermkey-0.18/termkey \
+          src/lua-5.2.3/src \
 
 
 

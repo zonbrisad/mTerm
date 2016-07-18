@@ -7,6 +7,38 @@
       <df name="output">
       </df>
       <df name="src">
+        <df name="libtermkey-0.18">
+          <df name="man">
+          </df>
+          <df name="t">
+            <in>01base.c</in>
+            <in>02getkey.c</in>
+            <in>03utf8.c</in>
+            <in>04flags.c</in>
+            <in>05read.c</in>
+            <in>06buffer.c</in>
+            <in>10keyname.c</in>
+            <in>11strfkey.c</in>
+            <in>12strpkey.c</in>
+            <in>13cmpkey.c</in>
+            <in>20canon.c</in>
+            <in>30mouse.c</in>
+            <in>31position.c</in>
+            <in>32modereport.c</in>
+            <in>39csi.c</in>
+            <in>taplib.c</in>
+            <in>taplib.h</in>
+          </df>
+          <in>demo-async.c</in>
+          <in>demo-glib.c</in>
+          <in>demo.c</in>
+          <in>driver-csi.c</in>
+          <in>driver-null.c</in>
+          <in>driver-ti.c</in>
+          <in>termkey-internal.h</in>
+          <in>termkey.c</in>
+          <in>termkey.h</in>
+        </df>
         <df name="lua-5.2.3">
           <df name="doc">
           </df>

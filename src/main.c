@@ -50,14 +50,14 @@ static int opt_bitrate         = 115200;
 static char opt_str[20];
 
 static GOptionEntry entries[] = {
-  { "verbose",  'v', 0, G_OPTION_ARG_NONE,     &opt_verbose,    "Be verbose output",    NULL },
-  { "version",  'b', 0, G_OPTION_ARG_NONE,     &opt_version,    "Output version info",  NULL },
-  { "quiet",    'q', 0, G_OPTION_ARG_NONE,     &opt_quiet,      "No output to console", NULL },
-  { "daemon",    0,  0, G_OPTION_ARG_NONE,     &opt_daemon,     "Start as daemon",      NULL },
-	{ "bitrate",  'b', 0, G_OPTION_ARG_INT,      &opt_bitrate,    "Bitrate",              NULL },
-	{ "str",      's', 0, G_OPTION_ARG_STRING,   opt_str,         "Bitrate",              NULL },
-	{ "port",     'p', 0, G_OPTION_ARG_FILENAME, opt_str,         "Serial port device",   NULL },
-  { NULL }
+   { "verbose",  'v', 0, G_OPTION_ARG_NONE,     &opt_verbose,    "Be verbose output",    NULL },
+   { "version",  'b', 0, G_OPTION_ARG_NONE,     &opt_version,    "Output version info",  NULL },
+   { "quiet",    'q', 0, G_OPTION_ARG_NONE,     &opt_quiet,      "No output to console", NULL },
+   { "daemon",    0,  0, G_OPTION_ARG_NONE,     &opt_daemon,     "Start as daemon",      NULL },
+   { "bitrate",  'b', 0, G_OPTION_ARG_INT,      &opt_bitrate,    "Bitrate",              NULL },
+   { "str",      's', 0, G_OPTION_ARG_STRING,   opt_str,         "Bitrate",              NULL },
+   { "port",     'p', 0, G_OPTION_ARG_FILENAME, opt_str,         "Serial port device",   NULL },
+   { NULL }
 };
 
 
@@ -67,19 +67,17 @@ static GOptionEntry entries[] = {
  */
  
 
-
-
 void safeExit() {
-  gp_log_close();
-	exit(0);
+   gp_log_close();
+   exit(0);
 }
 
 int main(int argc, char *argv[]) {
-	GError *error = NULL;
-	GOptionContext *context;
+   GError *error = NULL;
+   GOptionContext *context;
 	
-	// init log system
-	gp_log_init("glua.log");                 
+   // init log system
+   gp_log_init("glua.log");                 
 	
   // parse command line arguments
   context = g_option_context_new (DESCRIPTION);

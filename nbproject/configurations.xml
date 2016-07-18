@@ -3,6 +3,11 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name="src">
+        <df name="libtermkey-0.18">
+          <in>driver-null.c</in>
+          <in>driver-ti.c</in>
+          <in>termkey.c</in>
+        </df>
         <df name="lua-5.2.3">
           <df name="src">
             <in>lapi.c</in>
@@ -77,9 +82,6 @@
             <incDir>
               <pElem>.</pElem>
               <pElem>src</pElem>
-              <pElem>src/lua-5.2.3/src</pElem>
-              <pElem>/usr/include/glib-2.0</pElem>
-              <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>HAVE_CONFIG_H</Elem>
@@ -92,7 +94,44 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <folder path="0/src/libtermkey-0.18">
+        <cTool>
+          <incDir>
+            <pElem>src/libtermkey-0.18/termkey</pElem>
+            <pElem>src/lua-5.2.3/src</pElem>
+            <pElem>/usr/include/glib-2.0</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
+          </incDir>
+        </cTool>
+      </folder>
+      <folder path="0/src/lua-5.2.3">
+        <cTool>
+          <incDir>
+            <pElem>src/lua-5.2.3/src</pElem>
+            <pElem>/usr/include/glib-2.0</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
+          </incDir>
+        </cTool>
+      </folder>
       <item path="src/gp_log.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+          <incDir>
+            <pElem>src/libtermkey-0.18/termkey</pElem>
+            <pElem>src/lua-5.2.3/src</pElem>
+            <pElem>/usr/include/glib-2.0</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
+          </incDir>
+        </cTool>
+      </item>
+      <item path="src/libtermkey-0.18/driver-null.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="src/libtermkey-0.18/driver-ti.c" ex="false" tool="0" flavor2="3">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="src/libtermkey-0.18/termkey.c" ex="false" tool="0" flavor2="3">
         <cTool flags="0">
         </cTool>
       </item>
@@ -226,6 +265,12 @@
       </item>
       <item path="src/main.c" ex="false" tool="0" flavor2="3">
         <cTool flags="0">
+          <incDir>
+            <pElem>src/libtermkey-0.18/termkey</pElem>
+            <pElem>src/lua-5.2.3/src</pElem>
+            <pElem>/usr/include/glib-2.0</pElem>
+            <pElem>/usr/lib/x86_64-linux-gnu/glib-2.0/include</pElem>
+          </incDir>
         </cTool>
       </item>
     </conf>
