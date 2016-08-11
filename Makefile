@@ -22,8 +22,9 @@ LICENCE = GPLv2
 TARGET = mterm
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = src/main.c \
+SRC = src/main.c   \
       src/gp_log.c \
+      src/uart.c   \
       src/libtermkey-0.18/termkey.c            \
       src/libtermkey-0.18/driver-ti.c          \
       src/libtermkey-0.18/driver-csi.c         \
@@ -68,9 +69,9 @@ CPPSRC =
 ASRC =
 
 # Include directories
-INCLUDE = src \
-          src/libtermkey-0.18/termkey \
-          src/lua-5.2.3/src \
+INCLUDE = src                 \
+          src/libtermkey-0.18 \
+          src/lua-5.2.3/src   \
 
 
 
@@ -101,7 +102,7 @@ CSTANDARD = -std=gnu99
 # C Macro definitions
 CDEFS = HAVE_CONFIG_H \
         LUA_USE_MKSTEMP \
-	   _GNU_SOURCE
+	_GNU_SOURCE
 
 # ASM  Macro definitions
 ADEFS = 

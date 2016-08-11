@@ -28,6 +28,7 @@
 #include "gp_log.h"
 #include "termkey.h"
 #include "uart.h"
+#include "Def.h"
 
 
 // Defines -------------------------------------------------------------------
@@ -167,26 +168,25 @@ static gboolean stdin_io(GIOChannel *source, GIOCondition condition, gpointer da
 }
 
 void safeExit(int x) {
-  delwin(mainWin);
-  delwin(infoWin);
-  endwin();
   
   if (tk) {
+    termkey_stop(tk);
     termkey_destroy(tk); 
   }
+  
+  delwin(mainWin);
+  delwin(infoWin);
+  endwin();        
   
   gp_log_close();
   
   uart_close(dev);
-  
-//  printf("X\n");
+  //system("reset");
+  printf("SafeExit\n");
   exit(x);
 }
 
-
 static gboolean uart_io(GIOChannel *source, GIOCondition condition, gpointer data) {
-//  static char buf[255];
-//  int res;
   uart *dev;
   
   dev = (uart*) data;
@@ -207,6 +207,28 @@ static gboolean uart_io(GIOChannel *source, GIOCondition condition, gpointer dat
 
   return TRUE;
 }
+
+
+int getChar() {
+  int ch;
+  ch = getch();
+  if (ch==27) {
+    
+  }
+  
+}
+
+void ncurTest() {
+  int ch;
+  while (1) {
+    ch = getch();
+    wprintw(mainWin,"CH %s %d\n",keyname(ch), ch);
+    wrefresh(mainWin);
+    
+  }
+  safeExit(0);
+}
+
 
 int main(int argc, char *argv[]) {
   GError *error = NULL;
@@ -278,21 +300,25 @@ int main(int argc, char *argv[]) {
     safeExit(1);
   }
   
-  mDev = dev;
+  //mDev = dev;
   
   initscr();            // init ncurses
   //raw();                // raw mode
-  cbreak();
+  cbreak();             // c break node
+  noecho();
   
   
-  // 
   createWindows();
+  
+  ncurTest();
+  
   
   //wprintw(mainWin, "Testing COLS %d  LINES %d", COLS, LINES);
   wrefresh(mainWin);
   
-  tk = termkey_new(0, 0);
-
+  tk = termkey_new(0, TERMKEY_FLAG_CTRLC | TERMKEY_FLAG_NOTERMIOS);
+  //tk = termkey_new(0, 0);
+  
   if(!tk) {
     fprintf(stderr, "Cannot allocate termkey instance\n");
     safeExit(1);
@@ -301,19 +327,20 @@ int main(int argc, char *argv[]) {
   // Create main loop
   mLoop = g_main_loop_new(NULL, FALSE);
   
-  // Handle window change event
-  signal(SIGWINCH, winChangeHdl);
   
-  // handle ctrl-c 
-  signal(SIGINT,   sigintHdl);
+  signal(SIGWINCH, winChangeHdl); // Handle window change event
+  signal(SIGINT,   sigintHdl);    // handle ctrl-c 
+  signal(SIGSEGV,  safeExit);     // Handle segmentation fault
   
   updateInfoWin(dev);
   
+  // Add serial port watch
   g_io_add_watch(g_io_channel_unix_new(dev->fd), G_IO_IN, uart_io, (gpointer) dev);
   
-  // Add keyboard input 
+  // Add keyboard input watch 
   g_io_add_watch(g_io_channel_unix_new(0), G_IO_IN, stdin_io, (gpointer) dev);
    
+  // Main event loop
   g_main_loop_run(mLoop);
 
 	safeExit(0);
