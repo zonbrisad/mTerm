@@ -14,7 +14,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <signal.h>
-#include <glib-2.0/glib.h>
+//#include <glib-2.0/glib.h>
+#include <glib.h>
 #include <glib-unix.h>
 #include <termios.h>
 #include <sys/types.h>
