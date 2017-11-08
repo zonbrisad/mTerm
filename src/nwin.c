@@ -17,6 +17,7 @@
 
 #include <ncurses.h>
 #include "nwin.h"
+#include "uart.h"
 
 // Macros -------------------------------------------------------------------
 
@@ -50,11 +51,11 @@ void createWindows() {
 void winChangeHdl(int x) {
 //  wprintw(mainWin, "Winchange\n");
   createWindows(); 
-  updateInfoWin(mDev);
+//  updateInfoWin(mDev);
 }
 
 void sigintHdl(int sig) {
-  g_main_loop_quit(mLoop);
+//  g_main_loop_quit(mLoop);
 }
 
 void updateInfoWin(uart *dev) {

@@ -42,6 +42,7 @@ TARGET = mterm
 SRC = src/main.c   \
       src/gp_log.c \
       src/uart.c   \
+			src/nwin.c   \
       src/libtermkey-0.18/termkey.c            \
       src/libtermkey-0.18/driver-ti.c          \
       src/libtermkey-0.18/driver-csi.c         \
