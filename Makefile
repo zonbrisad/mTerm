@@ -1,18 +1,35 @@
 # Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
 # 
-# MTerm serial terminal program
+# Brief: MTerm serial terminal program
 #
-# author: Peter Malmberg <peter.malmberg@gmail.com>
-#
-#  
+# Name:    mterm
+# Author:  Peter Malmberg <peter.malmberg@gmail.com>
+# Date:    2017-10-10
+# Org:     Zonbrisad
+# 
+# License: GPLv2
+# 
 #----------------------------------------------------------------------------
-# On command line:
-# >make help 
+# [Makeplates]
+# This script is generated from makeplates Makefile project generator.
+#
+# Makeplates is developed by:
+# Peter Malmberg <peter.malmberg@gmail.com>
+#
+# Makeplates is available at:
+# https://github.com/zonbrisad/makeplates
+# 
+# [Disclaimer] 
+# Use on your own risk.
+#----------------------------------------------------------------------------
+# [Help]
+# 
+# Enter "make help" to get information about different targets.
+# 
 #----------------------------------------------------------------------------
 
-# Target platform
-# linux win32 avr arm osx
+# Target platform (linux, win32, avr, arm, osx)
 TARGET_PLATFORM = linux
 
 # Project License (GPL, GPLv2, MIT, BSD, Apache, etc.) 
@@ -61,7 +78,7 @@ SRC = src/main.c   \
 	src/lua-5.2.3/src/liolib.c \
 	src/lua-5.2.3/src/ldblib.c \
 
-# List C, C++ and assembler library/3rd partry source files here. (C/C++ dependencies are automatically generated.)
+# List C, C++ and assembler library/3rd party source files here. (C/C++ dependencies are automatically generated.)
 LSRC =	
 
 # Include directories
@@ -128,6 +145,8 @@ DEBUG=0
 # Compiler and Linker options
 #============================================================================
 
+##N- Build
+
 # Compiler Options C --------------------------------------------------------
 CFLAGS = -g$(DEBUG)                            # Debugging information
 CFLAGS += -O$(OPT)                             # Optimisation level
@@ -147,15 +166,15 @@ CFLAGS += -funsigned-char
 
 # Compiler Warnings C -------------------------------------------------------
 CFLAGS += -Wall                  # Standard warnings
-CFLAGS += -Wextra                # Some extra warnings
+#CFLAGS += -Wextra                # Some extra warnings
 CFLAGS += -Wmissing-braces 
 CFLAGS += -Wmissing-declarations # Warn if global function is not declared
-CFLAGS += -Wmissing-prototypes   # if a function is missing its prototype
-CFLAGS += -Wstrict-prototypes    # non correct prototypes i.e. void fun() => void fun(void) 
+#CFLAGS += -Wmissing-prototypes   # if a function is missing its prototype
+#CFLAGS += -Wstrict-prototypes    # non correct prototypes i.e. void fun() => void fun(void) 
 CFLAGS += -Wredundant-decls      # Warn if something is declared more than ones
 CFLAGS += -Wunreachable-code     # if code is not used
 CFLAGS += -Wshadow               # if local variable has same name as global
-CFLAGS += -Wformat=2             # check printf and scanf for problems
+#CFLAGS += -Wformat=2             # check printf and scanf for problems
 #CFLAGS += -Wno-format-nonliteral # 
 CFLAGS += -Wpointer-arith        # warn if trying to do aritmethics on a void pointer
 #CFLAGS += -Wsign-compare
@@ -206,6 +225,16 @@ LDFLAGS += $(EXTMEMOPTS)
 LDFLAGS += $(patsubst %,-L%,$(INCLUDE))
 LDFLAGS += -g
 
+
+# Misc settings -------------------------------------------------------------
+MPFLAGS  = -DLICENSE=$(LICENSE)
+MPFLAGS += -DTARGET=$(TARGET)
+MPFLAGS += -DVERSION=$(VERSION)
+ 
+CFLAGS   += $(MPFLAGS)
+CPPFLAGS += $(MPFLAGS)
+ASFLAGS  += $(MPFLAGS)
+
 #
 # Platform specific options
 #============================================================================
@@ -225,7 +254,7 @@ TCHAIN_PREFIX=
 # Handle pkg-config libraries -----------------------------------------------
 CFLAGS   += $(foreach X, $(PKGLIBS), $(shell pkg-config --cflags $(X)) )
 CPPFLAGS += $(foreach X, $(PKGLIBS), $(shell pkg-config --cflags $(X)) )
-LDFLAGS  += $(foreach X, $(PKGLIBS), $(shell pkg-config --libs $(X)) )
+LDFLAGS  += $(foreach X, $(PKGLIBS), $(shell pkg-config --libs $(X))   )
 
 # Size flags ----------------------------------------------------------------
 SIZEFLAGS = --format=berkley  # format = {sysv|berkeley}
@@ -258,11 +287,15 @@ TCHAIN_PREFIX=
 
 endif
 
+# 
+# Qt5 Specific objects
+#============================================================================
 
-# Qt stuff -----------------------------------------------------------------
-MOCSRC = $(patsubst %.h,%_moc.cpp,$(MOCS))      # Generate moc source files
-SRC += $(MOCSRC)
-UIH = $(patsubst src/%.ui, src/ui_%.h, $(UI) )  # Generate UI header files
+# Qt objects ----------------------------------------------------------------
+MOCSRC = $(patsubst %.h,%_moc.cpp,$(MOCS))         # Generate moc source files
+SRC   += $(MOCSRC)
+UIH    = $(patsubst src/%.ui, src/ui_%.h, $(UI) )  # Generate UI header files
+
 
 #
 # Tool settings
@@ -282,7 +315,7 @@ QMAKE     = qmake            # Qt make program
 UIC       = uic              # Qt resource file compiler
 CTEMPLATE = python3 tools/ctemplate.py # C/C++ template tool
 BIN2ARRAY = python3 tools/bin2array.py # Binary to array tool
-MPTOOL    = tools/mkptools   # Makeplate tools
+MPTOOL    = tools/mptools    # Makeplate tools
 CPPCHECK  = cppcheck
 INSTALL   = install
 ASTYLE    = astyle           # Code beatyfier
@@ -457,7 +490,7 @@ OBJS    = $(COBJS) $(CPPOBJS) $(AOBJS)
 LST = $(patsubst %.c, $(OBJDIR)/%.lst, $(CSRC)) $(patsubst %.cpp, $(OBJDIR)/%.lst, $(CPPSRC)) $(patsubst %.S, $(OBJDIR)/%.lst, $(ASRC))
 
 # Default target.
-all:	begin build finished end
+all:	begin build finished end ## Build project (default)
 
 nc: C_FILTER:= 
 nc: all   ## Build with no color filter on compiler output
@@ -485,7 +518,7 @@ finished:
 
 # Linking targets from object files
 .PRECIOUS : $(OBJS)
-$(TRGFILE): $(OBJS) $(OUTDIR)
+$(TRGFILE): $(UIH) $(OBJS) $(OUTDIR)
 	@echo -en "\n"$(MSG_LINKING)"       "
 	@echo -e $@ $(F_SOURCE) 
 	@$(CPP) $(ALL_CFLAGS) $(OBJS) --output $@ $(LDFLAGS) $(LIB) 2>&1 $(LD_FILTER)
@@ -532,20 +565,6 @@ $(OBJDIR)/%.s : %.c
 $(OBJDIR)/%.s : %.cpp
 	@$(CC) -S $(ALL_CPPFLAGS) $< -o $@
 
-
-# Qt Meta Object Compiler target
-$(MOCSRC): %_moc.cpp : %.h 	
-	@echo -en $(MSG_MOC) "\n               "
-	@echo -e $@ $(F_SOURCE)
-	@$(MOC) $(INCDIRS) $< -o $@
-
-# Qt user interface header file generation target
-$(UIH): src/ui_%.h: src/%.ui
-	@echo -en $(MSG_UI) "\n               "
-	@echo -e $@  $(F_SOURCE)  
-	@$(UIC) $(INCDIRS) $< -o $@
-
-
 # Create output dir
 $(OUTDIR):
 	@$(MKDIR) $@
@@ -563,6 +582,23 @@ size: $(TRGFILE)
 strip: $(TRGFILE) ## Strip target binary from symbols
 	@echo -e $(MSG_STRIP)
 	@$(STRIP) $(TRGFILE)
+
+# 
+# Qt5 Specific targets
+#============================================================================
+
+# Qt Meta Object Compiler target --------------------------------------------
+$(MOCSRC): %_moc.cpp : %.h 	
+	@echo -en $(MSG_MOC) "\n               "
+	@echo -e $@ $(F_SOURCE)
+	@$(MOC) $(INCDIRS) $< -o $@
+
+# Qt user interface header file generation target ---------------------------
+$(UIH): src/ui_%.h: src/%.ui
+	@echo -en $(MSG_UI) "\n               "
+	@echo -e $@  $(F_SOURCE)  
+	@$(UIC) $(INCDIRS) $< -o $@
+
 
 # 
 # Debug rules
@@ -681,18 +717,22 @@ run:    ## Run application
 
 
 # Project options -----------------------------------------------------------
+.PHONY: newc newcpp newclass 
 
-newfile:  ## Create a new C file
-	@${CTEMPLATE} --newc --dir src --author "$(AUTHOR)" --license "$(LICENSE)"
+##N- Create
+
+newc:  ## Create a new C module
+	@${CTEMPLATE} newc --dir src --author "$(AUTHOR)" --license "$(LICENSE)"
+
+newcpp:  ## Create a new C++ module
+	@${CTEMPLATE} newcpp --dir src --author "$(AUTHOR)" --license "$(LICENSE)"
 
 newclass:  ## Create a new C++ class
-	@${CTEMPLATE} --newclass --dir src --author "$(AUTHOR)" --license "$(LICENSE)"	
-		
-#newproj:  # Create a new project
-#	@${PROJECT} newproj
+	@${CTEMPLATE} newclass --dir src --author "$(AUTHOR)" --license "$(LICENSE)"	
 
 
 # Install options -----------------------------------------------------------
+.PHONY: install 
 
 # Install directory
 INSTALL_DIR      = ~/bin
@@ -719,20 +759,10 @@ install: $(TRGFILE) ## Install program
 # Help information
 #============================================================================
 
+##N- Information
+
 help: ## This help information
-	@printf "%-30s %s\n" "target" "help"
-	@echo -e $(MSG_LINE)
-	@IFS=$$'\n' ;                                    \
-	help_lines=(`fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##/:/'`); \
-	for help_line in $${help_lines[@]}; do                                     \
-	  IFS=$$':' ;                                                              \
-		help_split=($$help_line) ;                                               \
-		help_command=`echo $${help_split[0]} | sed -e 's/^ *//' -e 's/ *$$//'` ; \
-		help_info=`echo $${help_split[2]} | sed -e 's/^ *//' -e 's/ *$$//'` ;    \
-		printf "$(E_BR_CYAN)%-15s %s$(E_END)" $$help_command ;                 \
-		printf "$(E_BR_GREEN)%s$(E_END)\n" $$help_info ;                       \
-	done ; 
-	@echo -e $(MSG_LINE)
+	@$(MPTOOL) mpHelp Makefile
 
 list-src: ## List all source files
 	@echo -e $(MSG_SRC)
@@ -829,6 +859,9 @@ files: list-src ## List source files
 
 gccversion :    ## Display compiler version
 	@$(CC) --version
+
+libs: ## List system wide libraries (pkg-config)
+	@pkg-config --list-all
 	
 #
 # Personal settings
@@ -853,6 +886,8 @@ $(PERSONAL):	# Create a settings file
 	@echo "AUTHOR=${AUTHOR}" >> ${PERSONAL}
 
 
+
+##N- Code
 
 #
 # CppCheck static code analysis
@@ -923,16 +958,18 @@ astyle: ## Format source to conform to a standard
 
 	
 # Listing of phony targets.
-.PHONY : all clean gccversion build begin finished end elf lss sym archive edit help backup list-src list-flags newproj run install
+.PHONY : all clean gccversion build begin finished end elf lss sym archive edit help backup list-src list-flags run
 
 #
 # Makeplate internal targets
 #============================================================================
-mpType=mp-c
 
 utools: # Update tools from locally installed tools
 	@echo -e "${C_ACTION}Updating makeplate tools${E_END}"
-	@$(COPY) ~/bin/makeplate_files/tools/* tools/.
+	@mp utools
 
 meld: # Meld Makefile with locally installed makefile
-	@meld ~/bin/makeplate_files/${mpType}/Makefile  Makefile
+	@meld Makefile $${MP_PATH}/mp-c/Makefile  
+
+
+##-
